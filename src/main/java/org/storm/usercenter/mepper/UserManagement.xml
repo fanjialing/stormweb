@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.storm.usercenter.entity.UserManagement">
+	<resultMap type="UserManagement" id="UserManagement">
+		<id column="id" property="id" />
+		<result column="userCode" property="userCode" />
+		<result column="userPwd" property="userPwd" />
+		<result column="userStatus" property="userStatus" />
+		<result column="time" property="time" />
+		<result column="userName" property="userName" />
+		<result column="userPhone" property="userPhone" />
+		<result column="userNum" property="userNum" />
+		<result column="userBirthday" property="userBirthday" />
+		<result column="userEmail" property="userEmail" />
+		<result column="userLoginType" property="userLoginType" />
+		<result column="userLastLoginIp" property="userLastLoginIp" />
+		<result column="userLastLoginTime" property="userLastLoginTime" />
+		<result column="userType" property="userType" />
+		<result column="userOrgNo" property="userOrgNo" />
+		<result column="userOrgName" property="userOrgName" />
+		<result column="userAddress" property="userAddress" />
+		<result column="userDescription" property="userDescription" />
+	</resultMap>
+
+	<select id="checklogin" parameterType="string" resultMap="UserManagement">
+		select * from UserManagement where userCode = #{userCode}
+	</select>
+
+	<select id="test" resultType="UserManagement">
+		select * from UserManagement
+	</select>
+
+	<insert id="insertUserManagement" parameterType="org.storm.usercenter.entity.UserManagement">
+		insert
+		into
+		UserManagement
+		(
+		userName,
+		userNum,
+		userCode,
+		userPhone,
+		userPwd,
+		userStatus,
+		userBirthday,
+		userAddress,
+		userDescription,
+		time,
+		userLoginType,
+		userEmail,
+		userOrgNo,
+		userOrgName,
+		userType)
+		values (
+		#{userName,jdbcType=VARCHAR},
+		#{userNum,jdbcType=VARCHAR},
+		#{userCode,jdbcType=VARCHAR},
+		#{userPhone,jdbcType=VARCHAR},
+		#{userPwd,jdbcType=VARCHAR},
+		#{userStatus,jdbcType=VARCHAR},
+		#{userBirthday,jdbcType=VARCHAR},
+		#{userAddress,jdbcType=VARCHAR},
+		#{userDescription,jdbcType=VARCHAR},
+		#{time,jdbcType=VARCHAR},
+		#{userLoginType,jdbcType=VARCHAR},
+		#{userEmail,jdbcType=VARCHAR},
+		#{userOrgNo,jdbcType=VARCHAR},
+		#{userOrgName,jdbcType=VARCHAR},
+		#{userType,jdbcType=VARCHAR}
+		)
+	</insert>
+</mapper>
