@@ -30,6 +30,9 @@ public class UserManagementController {
 	@Autowired
 	private UserManagementService userManagementService;
 	
+	
+	//byte >> 
+	
 	@RequestMapping(value="/queryUser" , method = RequestMethod.POST) 
 	public void queryData(HttpServletResponse response,HttpServletRequest request){
 		String ip = IpUtil.getIpAddr(request);
