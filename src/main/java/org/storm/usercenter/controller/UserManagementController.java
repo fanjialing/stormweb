@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.storm.usercenter.cache.MemcachedCacheManager;
 import org.storm.usercenter.entity.UserManagement;
 import org.storm.usercenter.service.UserManagementService;
 import org.storm.usercenter.util.CommonUtil;
@@ -21,6 +22,7 @@ import org.storm.usercenter.util.IpUtil;
 import org.storm.usercenter.util.TheKey;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.cache.Cache;
 
 @Controller
 @RequestMapping(value="/users")
@@ -29,14 +31,19 @@ public class UserManagementController {
 	
 	@Autowired
 	private UserManagementService userManagementService;
+	@Autowired
+	private MemcachedCacheManager cacheManager;
 	
 	
 	//byte >> 
 	
-	@RequestMapping(value="/queryUser" , method = RequestMethod.POST) 
+	@RequestMapping(value="/queryUser" , method = RequestMethod.GET) 
 	public void queryData(HttpServletResponse response,HttpServletRequest request){
 		String ip = IpUtil.getIpAddr(request);
 		System.out.println(ip);
+//	   cacheManager.getCache("test666").put("abcde", "我说过的一句话");
+	   String s = (String) cacheManager.getMemCache("test666").getValue("abcde");
+	   System.out.println(s);
 		renderData(response, JSON.toJSONString(userManagementService.init() ,true));
 	}
 	

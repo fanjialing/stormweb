@@ -129,7 +129,11 @@
 	<artifactId>commons-lang3</artifactId>
 	<version>3.3.2</version>
 </dependency>
-
+<dependency>
+	<groupId>com.googlecode.xmemcached</groupId>
+	<artifactId>xmemcached</artifactId>
+	<version>2.0.0</version>
+</dependency>
   </dependencies>
   <build>
     <finalName>stormweb</finalName>
