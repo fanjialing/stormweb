@@ -15,7 +15,7 @@ public class UsercenterCommon  {
 	
 	public static JdbcTemplate usercenterJdbcTemplate;
 
-	
+	//11
 	
 	public JdbcTemplate getUsercenterJdbcTemplate() {
 		return usercenterJdbcTemplate;
