@@ -5,6 +5,7 @@
 <title>无标题文档</title>
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/mytable.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -25,6 +26,98 @@ $(document).ready(function(){
 });
 
 });
+</script>
+
+
+<script>
+
+$(function(){
+	
+/* 	$("#tabledata").append('<tr>')
+	.append('<td><input name="" type="checkbox" value="" /></td>')
+	.append('<td>20130908</td>')
+	.append('<td>王金平幕僚：马英九声明字字见血 人活着没意思</td>')
+	.append('<td>admin</td>')
+	.append('<td>江苏南京</td>')
+	.append('<td>2013-09-09 15:05</td>')
+	.append('<td>已审核</td>')
+	.append('<td><a href="#" class="tablelink">查看</a>     <a href="#" class="tablelink"> 删除</a></td>')
+	.append('</tr>');
+	
+	$("#tabledata").append('<tr>');
+	$("#tabledata").append('<td><input name="" type="checkbox" value="" /></td>');
+	$("#tabledata").append('<td>20130908</td>');
+	$("#tabledata").append('<td>王金平幕僚：马英九声明字字见血 人活着没意思</td>');
+	$("#tabledata").append('<td>admin</td>');
+	$("#tabledata").append('<td>江苏南京</td>');
+	$("#tabledata").append('<td>2013-09-09 15:05</td>');
+	$("#tabledata").append('<td>已审核</td>');
+	$("#tabledata").append('<td><a href="#" class="tablelink">查看</a>     <a href="#" class="tablelink"> 删除</a></td>');
+	$("#tabledata").append('</tr>'); */
+	
+	
+	var data = [
+	        	{
+	        		name : 'user',
+	        		value: '背景',
+	        	
+	        	},
+	        	{
+	        		name : 'user',
+	        		value: '背景',
+	        	
+	        	},        	
+	        	{
+	        		name : 'user',
+	        		value: '背景',
+	        	
+	        	},
+	        	{
+	        		name : 'user',
+	        		value: '背景',
+	        	
+	        	},
+	          	{
+	        		name : 'user',
+	        		value: '背景',
+	        	
+	        	},
+	        	{
+	        		name : 'user',
+	        		value: '背景',
+	        	
+	        	},        	
+	        	{
+	        		name : 'user',
+	        		value: '背景',
+	        	
+	        	},
+	        	{
+	        		name : 'user',
+	        		value: '背景',
+	        	
+	        	}
+	       ];
+	
+	$("#tablediv").myPlugin(
+	{
+	    columns: [
+	                { display: '姓名', name: 'username', align: 'center',width: '14%',sort:true
+	    			},
+	    			{ display: '身份证', name: 'usernum', align: 'center', width: '14%' },
+	    			{ display: '地址', name: 'usernum', align: 'center', width: '14%' },
+	    			{ display: 'xx', name: 'usernum', align: 'center', width: '14%' },
+	    			{ display: '什么的', name: 'usernum', align: 'center', width: '14%' },
+	    ],
+	    url:data
+	});
+
+});
+
+
+
+
+
 </script>
 
 
@@ -59,9 +152,9 @@ $(document).ready(function(){
         </ul>
     
     </div>
+     <div id="tablediv">
     
-    
-    <table class="tablelist">
+<!--     <table class="tablelist">
     	<thead>
     	<tr>
         <th><input name="" type="checkbox" value="" checked="checked"/></th>
@@ -74,108 +167,21 @@ $(document).ready(function(){
         <th>操作</th>
         </tr>
         </thead>
-        <tbody>
-        <tr>
+        <tbody  id="tabledata">
+          <tr>
         <td><input name="" type="checkbox" value="" /></td>
-        <td>20130908</td>
+        <td>20130908x</td>
         <td>王金平幕僚：马英九声明字字见血 人活着没意思</td>
         <td>admin</td>
         <td>江苏南京</td>
         <td>2013-09-09 15:05</td>
         <td>已审核</td>
-        <td><a href="#" class="tablelink">查看</a>     <a href="#" class="tablelink"> 删除</a></td>
+        <td><a href="#" class="tablelink">查看</a>    
+         <a href="#" class="tablelink"> 删除</a>
+         </td>
         </tr> 
-        
-        <tr>
-        <td><input name="" type="checkbox" value="" /></td>
-        <td>20130907</td>
-        <td>温州19名小学生中毒流鼻血续：周边部分企业关停</td>
-        <td>uimaker</td>
-        <td>山东济南</td>
-        <td>2013-09-08 14:02</td>
-        <td>未审核</td>
-        <td><a href="#" class="tablelink">查看</a>     <a href="#" class="tablelink">删除</a></td>
-        </tr>
-        
-        <tr>
-        <td><input name="" type="checkbox" value="" /></td>
-        <td>20130906</td>
-        <td>社科院:电子商务促进了农村经济结构和社会转型</td>
-        <td>user</td>
-        <td>江苏无锡</td>
-        <td>2013-09-07 13:16</td>
-        <td>未审核</td>
-        <td><a href="#" class="tablelink">查看</a>     <a href="#" class="tablelink">删除</a></td>
-        </tr>
-        
-        <tr>
-        <td><input name="" type="checkbox" value="" /></td>
-        <td>20130905</td>
-        <td>江西&quot;局长违规建豪宅&quot;：局长检讨</td>
-        <td>admin</td>
-        <td>北京市</td>
-        <td>2013-09-06 10:36</td>
-        <td>已审核</td>
-        <td><a href="#" class="tablelink">查看</a>     <a href="#" class="tablelink">删除</a></td>
-        </tr>
-        
-        <tr>
-        <td><input name="" type="checkbox" value="" /></td>
-        <td>20130904</td>
-        <td>中国2020年或迈入高收入国家行列</td>
-        <td>uimaker</td>
-        <td>江苏南京</td>
-        <td>2013-09-05 13:25</td>
-        <td>已审核</td>
-        <td><a href="#" class="tablelink">查看</a>     <a href="#" class="tablelink">删除</a></td>
-        </tr>
-        
-        <tr>
-        <td><input name="" type="checkbox" value="" /></td>
-        <td>20130903</td>
-        <td>深圳地铁车门因乘客拉闸打开 3人被挤入隧道</td>
-        <td>user</td>
-        <td>广东深圳</td>
-        <td>2013-09-04 12:00</td>
-        <td>已审核</td>
-        <td><a href="#" class="tablelink">查看</a>     <a href="#" class="tablelink">删除</a></td>
-        </tr>
-        
-        <tr>
-        <td><input name="" type="checkbox" value="" /></td>
-        <td>20130902</td>
-        <td>33次地表塌陷 村民不敢下地劳作(图)</td>
-        <td>admin</td>
-        <td>湖南长沙</td>
-        <td>2013-09-03 00:05</td>
-        <td>未审核</td>
-        <td><a href="#" class="tablelink">查看</a>     <a href="#" class="tablelink">删除</a></td>
-        </tr>
-        
-        <tr>
-        <td><input name="" type="checkbox" value="" /></td>
-        <td>20130901</td>
-        <td>医患关系：医生在替改革不彻底背黑锅</td>
-        <td>admin</td>
-        <td>江苏南京</td>
-        <td>2013-09-02 15:05</td>
-        <td>未审核</td>
-        <td><a href="#" class="tablelink">查看</a>     <a href="#" class="tablelink">删除</a></td>
-        </tr>
-        
-        <tr>
-        <td><input name="" type="checkbox" value="" /></td>
-        <td>20130900</td>
-        <td>山东章丘公车进饭店景点将自动向监控系统报警</td>
-        <td>uimaker</td>
-        <td>山东滨州</td>
-        <td>2013-09-01 10:26</td>
-        <td>已审核</td>
-        <td><a href="#" class="tablelink">查看</a>     <a href="#" class="tablelink">删除</a></td>
-        </tr>        
-        </tbody>
-    </table>
-    
+    </table> -->
+    </div>
    
     <div class="pagin">
     	<div class="message">共<i class="blue">1256</i>条记录，当前显示第&nbsp;<i class="blue">2&nbsp;</i>页</div>
