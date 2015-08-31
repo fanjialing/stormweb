@@ -3,6 +3,7 @@ package org.storm.usercenter.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import org.storm.usercenter.entity.UserManagement;
 import org.storm.usercenter.service.UserManagementService;
 import org.storm.usercenter.util.CommonUtil;
 import org.storm.usercenter.util.IpUtil;
+import org.storm.usercenter.util.JsonUtils;
 import org.storm.usercenter.util.TheKey;
 
 import com.alibaba.fastjson.JSON;
@@ -42,9 +44,13 @@ public class UserManagementController {
 		String ip = IpUtil.getIpAddr(request);
 		System.out.println(ip);
 //	   cacheManager.getCache("test666").put("abcde", "我说过的一句话");
-	   String s = (String) cacheManager.getMemCache("test666").getValue("abcde");
-	   System.out.println(s);
-		renderData(response, JSON.toJSONString(userManagementService.init() ,true));
+//	   String s = (String) cacheManager.getMemCache("test666").getValue("abcde");
+		List<UserManagement> temps =userManagementService.init(request.getParameter("page"), request.getParameter("pagesize"));
+		int count = userManagementService.QueryCount(request.getParameter("page"), request.getParameter("pagesize"));
+		String josnString = JsonUtils.createJsonString("Rows", temps);
+//		renderData(response, JSON.toJSONString(userManagementService.init() ,true));
+		renderData(response, josnString.substring(0,josnString.length()-1)+",\"Total\":\""+count+"\"}");	
+
 	}
 	
 	
@@ -57,7 +63,7 @@ public class UserManagementController {
 		        String   strEnc   =   thekey.getEncString(key);//加密字符串,返回String的密文   
 		        System.out.println("加密后：：" + strEnc);
 			}
-		renderData(response, JSON.toJSONString(userManagementService.init() ,true));
+//		renderData(response, JSON.toJSONString(userManagementService.init() ,true));
 	}
 	
 	

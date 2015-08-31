@@ -32,31 +32,7 @@ $(document).ready(function(){
 <script>
 
 $(function(){
-	
-/* 	$("#tabledata").append('<tr>')
-	.append('<td><input name="" type="checkbox" value="" /></td>')
-	.append('<td>20130908</td>')
-	.append('<td>王金平幕僚：马英九声明字字见血 人活着没意思</td>')
-	.append('<td>admin</td>')
-	.append('<td>江苏南京</td>')
-	.append('<td>2013-09-09 15:05</td>')
-	.append('<td>已审核</td>')
-	.append('<td><a href="#" class="tablelink">查看</a>     <a href="#" class="tablelink"> 删除</a></td>')
-	.append('</tr>');
-	
-	$("#tabledata").append('<tr>');
-	$("#tabledata").append('<td><input name="" type="checkbox" value="" /></td>');
-	$("#tabledata").append('<td>20130908</td>');
-	$("#tabledata").append('<td>王金平幕僚：马英九声明字字见血 人活着没意思</td>');
-	$("#tabledata").append('<td>admin</td>');
-	$("#tabledata").append('<td>江苏南京</td>');
-	$("#tabledata").append('<td>2013-09-09 15:05</td>');
-	$("#tabledata").append('<td>已审核</td>');
-	$("#tabledata").append('<td><a href="#" class="tablelink">查看</a>     <a href="#" class="tablelink"> 删除</a></td>');
-	$("#tabledata").append('</tr>'); */
-	
-	
-	var data = [
+	var data ={"Rows" : [
 	        	{
 	        		name : 'user',
 	        		value: '背景',
@@ -96,8 +72,18 @@ $(function(){
 	        		name : 'user',
 	        		value: '背景',
 	        	
+	        	},
+	        	{
+	        		name : 'user',
+	        		value: '背景',
+	        	
+	        	},
+	        	{
+	        		name : 'user',
+	        		value: '背景',
+	        	
 	        	}
-	       ];
+	       ],"Total":100};
 	
 	$("#tablediv").myPlugin(
 	{
@@ -109,7 +95,9 @@ $(function(){
 	    			{ display: 'xx', name: 'usernum', align: 'center', width: '14%' },
 	    			{ display: '什么的', name: 'usernum', align: 'center', width: '14%' },
 	    ],
-	    url:data
+	    url:'/stormweb/users/queryUser',
+	 	page:1,
+	    pagesize:10
 	});
 
 });
@@ -184,18 +172,7 @@ $(function(){
     </div>
    
     <div class="pagin">
-    	<div class="message">共<i class="blue">1256</i>条记录，当前显示第&nbsp;<i class="blue">2&nbsp;</i>页</div>
-        <ul class="paginList">
-        <li class="paginItem"><a href="javascript:;"><span class="pagepre"></span></a></li>
-        <li class="paginItem"><a href="javascript:;">1</a></li>
-        <li class="paginItem current"><a href="javascript:;">2</a></li>
-        <li class="paginItem"><a href="javascript:;">3</a></li>
-        <li class="paginItem"><a href="javascript:;">4</a></li>
-        <li class="paginItem"><a href="javascript:;">5</a></li>
-        <li class="paginItem more"><a href="javascript:;">...</a></li>
-        <li class="paginItem"><a href="javascript:;">10</a></li>
-        <li class="paginItem"><a href="javascript:;"><span class="pagenxt"></span></a></li>
-        </ul>
+
     </div>
     
     
@@ -218,7 +195,7 @@ $(function(){
     </div>
     
     
-    
+      
     
     </div>
     

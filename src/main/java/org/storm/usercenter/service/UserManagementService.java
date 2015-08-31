@@ -5,9 +5,11 @@ import java.util.List;
 import org.storm.usercenter.entity.UserManagement;
 
 public interface UserManagementService {
-		public List<UserManagement> init();
+		public List<UserManagement> init(String page,String pageSize);
 		
 		public UserManagement getUserIDAndPwd(String key);
+
+		public int QueryCount(String page, String pageSize);
 		
 		
 }

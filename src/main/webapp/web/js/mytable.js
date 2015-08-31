@@ -1,14 +1,22 @@
 (function($){
+	var page;
+	var pagesize;
+	var total;
+	var url;
+	
 	$.fn.myPlugin = function(options){
-		run.init(this);
-		var dataarray = [];
-		dataarray.push(run.title(options));
-		dataarray.push(run.show(options));
-		run.start(this,dataarray);
+		
+		//初始化 config
+		run.init(this,options);
+		run.title(this,options);
+		run.url(page);
 	}
 	
 	var run = {
-			init:function($this){
+			test:function(){
+				alert('---')
+			},
+			init:function($this,options){
 				$this.css(
 						{
 						
@@ -24,50 +32,153 @@
 						'padding':'5',
 						
 				});
+				
+				if(options.url){
+					url = options.url;
+				}
+				if(options.pagesize){
+					pagesize = options.pagesize;
+				}
+				if(options.page){
+					page =options.page;
+				}
 			},
-			start:function($this,dataarray){
-				var starts = [];
-				starts.push("<table class='tablelist'>");
-				starts.push(dataarray);
-				starts.push("</table>");
-				$this.append(starts.join(''));
-			},
-			title:function(options){
+			title:function($this,options){
 				var titles = [];
 				if(options.columns){
-					titles.push("<thead><tr>");
+					var table =  document.createElement("table");
+					var tbody = document.createElement("tbody");
+					tbody.id='tbody';
+					table.className='tablelist';
+					var thead = document.createElement("thead");
+					var tr = document.createElement("tr");
+					thead.appendChild(tr); 
+					table.appendChild(thead); 
+					table.appendChild(tbody); 
+					$this[0].appendChild(table); 
 					for(var i=0;i<options.columns.length;i++){
+						
 						if(options.columns[i].sort){
-							titles.push("<th><i class='sort'><img src='images/px.gif' /></i>"+options.columns[i].display+"</th>");
+							var th = document.createElement("th");
+							th.innerHTML=options.columns[i].display;
+							var _i = document.createElement("i");
+							var img = document.createElement("img");
+							img.src='images/px.gif';
+							_i.appendChild=(img);
+							_i.className='sort';
+							th.appendChild(_i);
+							tr.appendChild(th); 
 						}else{
-							titles.push( "<th>"+options.columns[i].display+"</th>")
+							var th = document.createElement("th");
+							th.innerHTML=options.columns[i].display;
+							tr.appendChild(th); 
 						}
 
 					}
-					titles.push("</thead>");
-					return titles.join('');
 				}
 			},
-			show:function(options){
-				var shows = [];
-				if(options.url){
+			url:function(page){
+				var datajson;
+				
 					// 加载json 数据
-					shows.push("<tbody");
-					for(var i=0;i<options.url.length;i++){
-						if(i%2==0){
-							shows.push( "<tr>");
+					$.ajax({
+			  			url:url,
+			  			type:'get',
+			  			async:false,  //true:异步,false:同步
+			  			data:{'page': page,'pagesize':pagesize},
+			  			dataType:'json',
+			  			success:function(data){
+			  				datajson = data;
+			  				run.show(datajson);
+			  			},
+			  			error:function(){
+			  				console.log('error');
+			  			}
+			  		});
+			},
+			show:function(data){
+				if(data){
+	  				
+
+					total = data.Total;
+
+					var totalPage = total % pagesize == 0 ? total / pagesize : parseInt(total/ pagesize) + 1;
+
+					var offset =   pagesize * (page - 1);
+					var beginpage = 1;
+					var endpage = 10;
+
+			 		if(parseInt(page) >= 7 )
+			 		{
+			 			beginpage=parseInt(page)-2;
+			 			endpage = parseInt(page) +7;
+			 		}
+			 		if(endpage>=totalPage)
+			 		{
+			 			endpage=totalPage;
+			 		}
+
+					var totals = [] ;
+					totals.push('<ul class="paginList">') ;
+					totals.push('<li class="paginItem"><a href="javascript:;"><span class="pagepre"></span></a></li>') ;
+					for(var j=beginpage;j<=endpage;j++){
+						if(page == j){
+							totals.push('<li class="paginItem current"><a href="javascript:;"  >'+j+'</a></li>') ;
 						}else{
-							shows.push("<tr class='odd'>");
+							totals.push('<li class="paginItem"><a href="javascript:;"  >'+j+'</a></li>') ;
 						}
-						shows.push( "<td>"+options.url[i].name+"</td>");
-						shows.push("<td>"+options.url[i].value+"</td>");
-						shows.push("</tr>");
 					}
-					shows.push("</tbody>");
-					return shows.join('');
+					totals.push('<li class="paginItem"><a href="javascript:;"><span class="pagenxt"></span></a></li>') ;
+					totals.push('</ul>') ;
+					$(".pagin").html(totals.join("")) ;
+					$(".pagin ul li").click(function(){
+							//上一页
+							if($(this).index() == 0){
+								console.log('上一页');
+								if(page !=1)
+								page--;
+
+							}else
+							//下一页
+							if($(this).index() == $(".pagin ul li").length - 1){
+								console.log('下一页');
+								if(page !=endpage)
+								page++;
+
+							}else{
+								page = $(this).text();
+
+							}
+
+						run.url(page);
+					});
+					var tbody = document.getElementById("tbody");
+					tbody.innerHTML= '';
+					for(var i=0;i<data.Rows.length;i++){
+						console.log(data.Rows[i]);
+						var tr = document.createElement("tr");
+						if(i%2==0){
+							tbody.appendChild(tr);
+						}else{
+							tr.className='odd';
+							tbody.appendChild(tr);
+						}
+						var td_id = document.createElement("td");
+						var td_code = document.createElement("td");
+						var td_name = document.createElement("td");
+
+						td_id.innerHTML=data.Rows[i].id;
+						td_code.innerHTML=data.Rows[i].userCode;
+						td_name.innerHTML=data.Rows[i].userPwd;
+
+						tr.appendChild(td_id);
+						tr.appendChild(td_code);
+						tr.appendChild(td_name);
+
+					}
 				}
 			}
-	
+		
 	}
 	
 	
