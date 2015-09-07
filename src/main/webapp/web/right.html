@@ -4,9 +4,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>无标题文档</title>
 <link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/select.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/mytable.js"></script>
-
+<script type="text/javascript" src="js/select-ui.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
   $(".click").click(function(){
@@ -27,10 +28,32 @@ $(document).ready(function(){
 
 });
 </script>
-
+<script type="text/javascript">
+$(document).ready(function(e) {
+    $(".select1").uedSelect({
+		width : 345			  
+	});
+	$(".select2").uedSelect({
+		width : 167  
+	});
+	$(".select3").uedSelect({
+		width : 100
+	});
+});
+</script>
 
 <script>
-
+//skin demo
+(function() {
+	var _skin, _lhgcore;
+	var _search = window.location.search;
+	if (_search) {
+		_skin = _search.split('demoSkin=')[1];
+	};
+	
+	document.write('<scr'+'ipt src="/stormweb/web/lhgdialog/lhgdialog.min.js?skin=' + (_skin || 'default') +'"></sc'+'ript>');
+	window._isDemoSkin = !!_skin;
+})();
 $(function(){
 	var data ={"Rows" : [
 	        	{
@@ -85,25 +108,43 @@ $(function(){
 	        	}
 	       ],"Total":100};
 	
-	$("#tablediv").myPlugin(
-	{
-	    columns: [
-	                { display: '姓名', name: 'username', align: 'center',width: '14%',sort:true
-	    			},
-	    			{ display: '身份证', name: 'usernum', align: 'center', width: '14%' },
-	    			{ display: '地址', name: 'usernum', align: 'center', width: '14%' },
-	    			{ display: 'xx', name: 'usernum', align: 'center', width: '14%' },
-	    			{ display: '什么的', name: 'usernum', align: 'center', width: '14%' },
-	    ],
-	    url:'/stormweb/users/queryUser',
-	 	page:1,
-	    pagesize:10
-	});
+	var tab = $("#tablediv").myPlugin(
+			{
+			    columns: [
+			                { display: '姓名', name: 'username', align: 'center',width: '14%',sort:true
+			    			},
+			    			{ display: '身份证', name: 'usernum', align: 'center', width: '14%' },
+			    			{ display: '地址', name: 'usernum', align: 'center', width: '14%' },
+			    			{ display: 'xx', name: 'usernum', align: 'center', width: '14%' },
+			    			{ display: '什么的', name: 'usernum', align: 'center', width: '14%' },
+			    ],
+			    url:'/stormweb/users/queryUser',
+			 	page:1,
+			    pagesize:10
+			});
+			
+			$("#searchbut").click(function(){
+				openAddDialog("/stormweb/web/index.html");
+				
+				/*
+				var data = $("#search").serialize() ;
+				alert(data)
+				tab.setParm(data) ;
+				tab.reLoad() ;
+				*/
+			});
 
 });
 
 
-
+function openAddDialog(path){
+    $.dialog({
+	    	height:$(window).height(),
+		width: $(window).width(),
+		title: '',
+      content: path
+	});
+}
 
 
 </script>
@@ -125,54 +166,52 @@ $(function(){
     
     <div class="rightinfo">
     
-    <div class="tools">
+    <div  class="tools">
+         <form id="search">
+      <ul class="seachform">
+    <li><label>综合查询</label><input name="" type="text" class="scinput" /></li>
+    <li><label>指派</label>  
+    <div class="vocation">
+    <select class="select3" name="select3">
+    <option value="12">全部</option>
+    <option>其他</option>
+    </select>
+    </div>
+    </li>
     
-    	<ul class="toolbar">
-        <li class="click"><span><img src="images/t01.png" /></span>添加</li>
-        <li class="click"><span><img src="images/t02.png" /></span>修改</li>
-        <li><span><img src="images/t03.png" /></span>删除</li>
-        <li><span><img src="images/t04.png" /></span>统计</li>
-        </ul>
-        
-        
-        <ul class="toolbar1">
+    <li><label>重点客户</label>  
+    <div class="vocation">
+    <select class="select3">
+    <option>全部</option>
+    <option>其他</option>
+    </select>
+    </div>
+    </li>
+    
+    <li><label>客户状态</label>  
+    <div class="vocation">
+    <select class="select3">
+    <option>全部</option>
+    <option>其他</option>
+    </select>
+    </div>
+    </li>
+    <li><label>&nbsp;</label><input id="searchbut" type="button" class="scbtn" value="查询"/></li>
+    </ul>
+        </form>
+<!--         <ul class="toolbar1">
         <li><span><img src="images/t05.png" /></span>设置</li>
         </ul>
-    
+       <form id="search">
+   		用户名<input id="username" name="username"/>
+   		密码<input id="userpwd" name="userpwd" />
+  	 </form>
+   		<button id="searchbut">搜索</button> -->
     </div>
      <div id="tablediv">
-    
-<!--     <table class="tablelist">
-    	<thead>
-    	<tr>
-        <th><input name="" type="checkbox" value="" checked="checked"/></th>
-        <th>编号<i class="sort"><img src="images/px.gif" /></i></th>
-        <th>标题</th>
-        <th>用户</th>
-        <th>籍贯</th>
-        <th>发布时间</th>
-        <th>是否审核</th>
-        <th>操作</th>
-        </tr>
-        </thead>
-        <tbody  id="tabledata">
-          <tr>
-        <td><input name="" type="checkbox" value="" /></td>
-        <td>20130908x</td>
-        <td>王金平幕僚：马英九声明字字见血 人活着没意思</td>
-        <td>admin</td>
-        <td>江苏南京</td>
-        <td>2013-09-09 15:05</td>
-        <td>已审核</td>
-        <td><a href="#" class="tablelink">查看</a>    
-         <a href="#" class="tablelink"> 删除</a>
-         </td>
-        </tr> 
-    </table> -->
     </div>
    
     <div class="pagin">
-
     </div>
     
     

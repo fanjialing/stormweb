@@ -15,7 +15,7 @@ public class UserManagementServiceImpl extends SqlSessionDaoSupport implements U
 	
 
 	
-	public List<UserManagement> init(String page,String pagesize) {
+	public List<UserManagement> init(String page,String pagesize,String filter) {
 	 
 //		SqlSession session = this.getSqlSession();
 //		List<UserManagement> list =session.selectList("test");
@@ -30,8 +30,14 @@ public class UserManagementServiceImpl extends SqlSessionDaoSupport implements U
 		sbf.append(" users.userCode,");
 		sbf.append(" users.id,");
 		sbf.append(" users.userPwd");
-		sbf.append(" from userManagement  users");
+		sbf.append(" from userManagement  users where 1=1 ");
+		
+		if(filter!=null){
+			sbf.append(FilterToStr(filter)) ;
+		}
+		
 		sbf.append(" limit ").append(begin).append(",").append(pagesize);
+		
 		try {
 			connection = UsercenterCommon.getConnection();
 			preparedStatement = connection.prepareStatement(sbf.toString());
@@ -68,7 +74,7 @@ public class UserManagementServiceImpl extends SqlSessionDaoSupport implements U
 		return null;
 	}
 
-	public int QueryCount(String page, String pagesize) {
+	public int QueryCount(String page, String pagesize,String filter) {
 //		SqlSession session = this.getSqlSession();
 //		List<UserManagement> list =session.selectList("test");
 //		return list;
@@ -81,7 +87,11 @@ public class UserManagementServiceImpl extends SqlSessionDaoSupport implements U
 		sbf.append(" users.userCode,");
 		sbf.append(" users.id,");
 		sbf.append(" users.userPwd");
-		sbf.append(" from userManagement  users");
+		sbf.append(" from userManagement  users where 1=1 ");
+		if(filter!=null){
+			sbf.append(FilterToStr(filter)) ;
+		}
+		System.out.println(sbf.toString());
 		try {
 			connection = UsercenterCommon.getConnection();
 			preparedStatement = connection.prepareStatement(sbf.toString());
@@ -102,5 +112,17 @@ public class UserManagementServiceImpl extends SqlSessionDaoSupport implements U
 	}
 	
 	
-	
+	public String FilterToStr(String filter){
+		StringBuffer sql = null ;
+		if(filter != null){
+			sql = new StringBuffer() ;
+			String[] filters = filter.split("&") ;
+			for (String str : filters) {
+				if(str.split("=").length>1){
+					sql.append(" and ").append(str.split("=")[0]).append("= '").append(str.split("=")[1]).append("'  ") ;
+				}
+			}
+		}
+		return sql.toString() ;
+	}
 }

@@ -45,8 +45,8 @@ public class UserManagementController {
 		System.out.println(ip);
 //	   cacheManager.getCache("test666").put("abcde", "我说过的一句话");
 //	   String s = (String) cacheManager.getMemCache("test666").getValue("abcde");
-		List<UserManagement> temps =userManagementService.init(request.getParameter("page"), request.getParameter("pagesize"));
-		int count = userManagementService.QueryCount(request.getParameter("page"), request.getParameter("pagesize"));
+		List<UserManagement> temps =userManagementService.init(request.getParameter("page"), request.getParameter("pagesize"),request.getParameter("filter"));
+		int count = userManagementService.QueryCount(request.getParameter("page"), request.getParameter("pagesize"),request.getParameter("filter"));
 		String josnString = JsonUtils.createJsonString("Rows", temps);
 //		renderData(response, JSON.toJSONString(userManagementService.init() ,true));
 		renderData(response, josnString.substring(0,josnString.length()-1)+",\"Total\":\""+count+"\"}");	

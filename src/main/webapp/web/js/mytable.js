@@ -3,13 +3,14 @@
 	var pagesize;
 	var total;
 	var url;
-	
+	var parm;
 	$.fn.myPlugin = function(options){
 		
 		//初始化 config
 		run.init(this,options);
 		run.title(this,options);
-		run.url(page);
+		run.url(page,parm);
+		return  run;
 	}
 	
 	var run = {
@@ -21,7 +22,7 @@
 						{
 						
 						'min-height':'20px',
-						'height':'400px',
+						'height':$(window).height()-88-80,
 						'margin': '0px auto',
 						'margin-bottom' :'20px',
 						'margin-left' :'0px',
@@ -79,13 +80,16 @@
 			},
 			url:function(page){
 				var datajson;
-				
+				var data = {page:page,pagesize:pagesize};
+				if(parm){
+					data = {page:page,pagesize:pagesize,filter:parm};
+				}
 					// 加载json 数据
 					$.ajax({
 			  			url:url,
 			  			type:'get',
 			  			async:false,  //true:异步,false:同步
-			  			data:{'page': page,'pagesize':pagesize},
+			  			data:data,
 			  			dataType:'json',
 			  			success:function(data){
 			  				datajson = data;
@@ -95,6 +99,15 @@
 			  				console.log('error');
 			  			}
 			  		});
+			},
+			setParm : function(parms){
+				if(parms){
+					console.log(parms)
+					parm = parms ;
+				}
+			},
+			reLoad : function(){
+				run.url(page,parm) ;
 			},
 			show:function(data){
 				if(data){
@@ -119,6 +132,9 @@
 			 		}
 
 					var totals = [] ;
+					
+					totals.push('<div class="message">共<i class="blue">'+total+'</i>条记录，当前显示第&nbsp;<i class="blue">'+page+'&nbsp;</i>页</div>');
+					totals.push('');
 					totals.push('<ul class="paginList">') ;
 					totals.push('<li class="paginItem"><a href="javascript:;"><span class="pagepre"></span></a></li>') ;
 					for(var j=beginpage;j<=endpage;j++){
@@ -150,7 +166,7 @@
 
 							}
 
-						run.url(page);
+						run.url(page,parm);
 					});
 					var tbody = document.getElementById("tbody");
 					tbody.innerHTML= '';
